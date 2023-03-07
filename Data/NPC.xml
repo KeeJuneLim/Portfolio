@@ -1,0 +1,12 @@
+<idspace id="NPC">
+	<category name="Normal">
+		<class ClassId="10001" ClassName="Zombie" Value="5"/>
+		<class ClassId="10002" ClassName="Skeleton" Value="5"/>
+		<class ClassId="10003" ClassName="Ghost" Value="6"/>
+	</category>
+	<category name="Boss">
+		<class ClassId="20001" ClassName="ZombieKing" Value="111"/>
+		<class ClassId="20002" ClassName="SkeletonKing" Value="222"/>
+		<class ClassId="20003" ClassName="GhostKing" Value="333"/>
+	</category>
+</idspace>
