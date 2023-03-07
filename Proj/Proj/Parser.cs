@@ -71,11 +71,11 @@ namespace Proj {
         }
 
         public static List<Dictionary<string, List<Dictionary<string, string>>>> GetIdspace(string idspace) {
-            return IdspaceList[idspace];
+            return new List<Dictionary<string, List<Dictionary<string, string>>>>(IdspaceList[idspace]);
         }
 
         public static List<Dictionary<string, string>> GetCategory(string idspace, string category) {
-            return CategoryList[category];
+            return new List<Dictionary<string, string>>(CategoryList[category]);
         }
 
         public static Dictionary<string, string> GetClass(string className) {
@@ -84,7 +84,7 @@ namespace Proj {
                 foreach (var prop in @class) {
                     if (string.Equals(prop.Key, "ClassName")) {
                         if (prop.Value == className) {
-                            return @class;
+                            return new Dictionary<string, string>(@class);
                         }
                     }
                 }
@@ -98,7 +98,7 @@ namespace Proj {
                 foreach (var prop in @class) {
                     if (string.Equals(prop.Key, "classId")) {
                         if (prop.Value == classId.ToString()) {
-                            return @class;
+                            return new Dictionary<string, string>(@class);
                         }
                     }
                 }

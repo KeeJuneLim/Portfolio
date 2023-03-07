@@ -2,14 +2,11 @@
 
 namespace Proj {
     class Program {
-        private const int FPS = 30;
+        private const int FPS = 1;
         private static double lastUpdateTime;
         //private double 
         static void Main(string[] args) {
             OnInitialize();
-
-            var barbarianValue = Parser.GetInt("Barbarian", "Value");
-            Console.WriteLine(barbarianValue); // 출력값: 6
 
             while (true) {
                 var curUpdateTime = DateTime.Now.Ticks;
@@ -26,12 +23,14 @@ namespace Proj {
 
         static void OnInitialize() {
             lastUpdateTime = DateTime.Now.Ticks;
-
             Parser.LoadXmlData();
+
+            FieldMapManager.Inst.OnInitialize();
         }
 
 
         static void OnUpdate(double dt) {
+            FieldMapManager.Inst.OnUpdate(dt);
         }
 
     }
