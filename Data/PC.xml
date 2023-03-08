@@ -1,12 +1,12 @@
 <idspace id="PC">
-	<category name="Melee">
-		<class ClassId="1001" ClassName="Paladin" Value="5"/>
-		<class ClassId="1002" ClassName="Assassin" Value="5"/>
-		<class ClassId="1003" ClassName="Barbarian" Value="6"/>
+	<category type="Melee">
+		<class ClassId="1001" ClassName="Paladin" Script="CommonPCScript" Faction="Player"/>
+		<class ClassId="1002" ClassName="Assassin" Script="CommonPCScript" Faction="Player"/>
+		<class ClassId="1003" ClassName="Barbarian" Script="CommonPCScript" Faction="Player"/>
 	</category>
-	<category name="Range">
-		<class ClassId="2001" ClassName="Amazon" Value="111"/>
-		<class ClassId="2002" ClassName="Sorceress" Value="222"/>
-		<class ClassId="2003" ClassName="Necromancer" Value="333"/>
+	<category type="Range">
+		<class ClassId="2001" ClassName="Amazon" Script="CommonPCScript" Faction="Player"/>
+		<class ClassId="2002" ClassName="Sorceress" Script="CommonPCScript" Faction="Player"/>
+		<class ClassId="2003" ClassName="Necromancer" Script="CommonPCScript" Faction="Player"/>
 	</category>
 </idspace>

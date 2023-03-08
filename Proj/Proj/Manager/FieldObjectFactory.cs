@@ -1,4 +1,6 @@
-﻿using Proj.Component;
+﻿using System;
+using System.Numerics;
+using Proj.Component;
 using Proj.Enum;
 
 namespace Proj {
@@ -16,20 +18,15 @@ namespace Proj {
             }
         }
 
-        public FieldObject CreateFieldObject(string idspace, string className) {
-            var fieldObject = new FieldObject {
+        public FieldObject CreateFieldObject(string idspace, string className, int level, Vector2 position) {
+            var fieldObject = new FieldObject() {
+                Idspace = idspace,
                 ClassName = className,
-                Idspace = idspace
-        };
+                Position = position
+            };
            
 
             switch (idspace) {
-                case Idspace.PC:
-                    fieldObject.Components.Add(new DataComponent());
-                    break;
-                case Idspace.NPC:
-                    fieldObject.Components.Add(new DataComponent());
-                    break;
                 case Idspace.Skill:
                     break;
             }
@@ -39,6 +36,40 @@ namespace Proj {
             }
 
             return fieldObject;
+        }
+
+        public FieldObject CreateFieldChar(string idspace, string className, int level, Vector2 position) {
+            
+            if (idspace != Idspace.PC && idspace != Idspace.NPC) {
+                Console.WriteLine("Wrong Data - Object which Creating is not FieldChar");
+                return null;
+            }
+
+            var fieldChar = new FieldChar() {
+                Idspace = idspace,
+                ClassName = className,
+                Level = level,
+                Position = position
+            };
+
+
+            switch (idspace) {
+                case Idspace.PC:
+                    fieldChar.Components.Add(new DataComponent());
+                    fieldChar.Components.Add(new SkillInventoryComponent());
+                    break;
+                case Idspace.NPC:
+                    fieldChar.Components.Add(new DataComponent());
+                    fieldChar.Components.Add(new SkillInventoryComponent());
+                    break;
+         
+            }
+
+            foreach (var component in fieldChar.Components) {
+                component.Owner = fieldChar;
+            }
+
+            return fieldChar;
         }
     }
 }

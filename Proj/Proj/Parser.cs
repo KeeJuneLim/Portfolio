@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Xml;
 
 namespace Proj {
@@ -53,8 +54,6 @@ namespace Proj {
                                 var p = (XmlNode)prop;
                                 var propName = p.Name;
                                 var propValue = p.Value;
-
-                                var properties = new KeyValuePair<string, string>(propName, propValue);
 
                                 classProps.Add(propName, propValue);
                             }
@@ -178,5 +177,60 @@ namespace Proj {
 
             return 0.0;
         }
+
+        public static string GetString(string className, string propName) {
+            var @class = GetClass(className);
+
+            foreach (var prop in @class) {
+                if (prop.Key == propName) {
+                    return prop.Value;
+                }
+            }
+
+            return "";
+        }
+
+        public static string GetString(int classId, string propName) {
+            var @class = GetClass(classId);
+
+            foreach (var prop in @class) {
+                if (prop.Key == propName) {
+                    return prop.Value;
+                }
+            }
+
+            return "";
+        }
+
+        public static Vector2 GetVector2(string className, string propName) {
+            var @class = GetClass(className);
+
+            foreach (var prop in @class) {
+                if (prop.Key == propName) {
+                    var str = prop.Value;
+                    string[] temp = str.Substring(1, str.Length - 2).Split(',');
+
+                    return new Vector2(float.Parse(temp[0]), float.Parse(temp[1]));
+                }
+            }
+
+            return Vector2.Zero;
+        }
+
+        public static Vector2 GetVector2(int classId, string propName) {
+            var @class = GetClass(classId);
+
+            foreach (var prop in @class) {
+                if (prop.Key == propName) {
+                    var str = prop.Value;
+                    string[] temp = str.Substring(1, str.Length - 2).Split(',');
+
+                    return new Vector2(float.Parse(temp[0]), float.Parse(temp[1]));
+                }
+            }
+
+            return Vector2.Zero;
+        }
+
     }
 }
