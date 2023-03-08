@@ -1,0 +1,19 @@
+<idspace id="NPCGenerateInfo">
+	<category map="Seoul">
+		<class NPCName="Zombie" Level="3" MaxCount="3" GenerateInterval="10" Position="(2,2)" PositionOffset="3"/>
+		<class NPCName="Zombie" Level="4" MaxCount="2" GenerateInterval="10" Position="(10,10)" PositionOffset="3"/>
+		<class NPCName="Ghost" Level="4" MaxCount="2" GenerateInterval="10" Position="(15,5)" PositionOffset="3"/>
+		<class NPCName="Grandpa" Level="1" MaxCount="1" GenerateInterval="1000000" Position="(3,3)" PositionOffset="0"/>
+		<class NPCName="Police" Level="1" MaxCount="1" GenerateInterval="1000000" Position="(5,5)" PositionOffset="0"/>
+	</category>
+	<category map="Tokyo">
+		<class NPCName="Zombie" Level="3" MaxCount="3" GenerateInterval="10" Position="(2,2)" PositionOffset="3"/>
+		<class NPCName="Zombie" Level="4" MaxCount="2" GenerateInterval="10" Position="(10,10)" PositionOffset="3"/>
+		<class NPCName="Ghost" Level="4" MaxCount="2" GenerateInterval="10" Position="(15,5)" PositionOffset="3"/>
+	</category>
+	<category map="Sydney">
+		<class NPCName="Zombie" Level="3" MaxCount="3" GenerateInterval="10" Position="(2,2)" PositionOffset="3"/>
+		<class NPCName="Zombie" Level="4" MaxCount="2" GenerateInterval="10" Position="(10,10)" PositionOffset="3"/>
+		<class NPCName="Ghost" Level="4" MaxCount="2" GenerateInterval="10" Position="(15,5)" PositionOffset="3"/>
+	</category>
+</idspace>

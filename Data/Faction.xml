@@ -1,0 +1,8 @@
+<idspace id="Faction">
+	<category>
+		<class FactionName="Player" HostileFaction="{Monster}" FriendlyFaction="{Player}"/>
+		<class FactionName="Monster" HostileFaction="{Player,VillageSoldier}" FriendlyFaction="{Monster}"/>
+		<class FactionName="Villager" HostileFaction="{Monster}" FriendlyFaction="{Player,Villager,VillageSoldier}"/>
+		<class FactionName="VillageSoldier" HostileFaction="{Monster}" FriendlyFaction="{Player,Villager,VillageSoldier}"/>
+	</category>
+</idspace>

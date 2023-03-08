@@ -1,0 +1,12 @@
+<idspace id="Map">
+	<category type="Field">
+		<class ClassId="3001" ClassName="Seoul" Script="CommonFieldMapScript"/>
+		<class ClassId="3002" ClassName="Tokyo" Script="CommonFieldMapScript"/>
+		<class ClassId="3003" ClassName="Sydney" Script="CommonFieldMapScript"/>
+	</category>
+	<category type="Dungeon">
+		<class ClassId="30001" ClassName="SeoulDungeon" Script="CommonDungeonScript"/>
+		<class ClassId="30002" ClassName="TokyoDungeon" Script="CommonDungeonScript"/>
+		<class ClassId="30003" ClassName="SydneyDungeon" Script="CommonDungeonScript"/>
+	</category>
+</idspace>
