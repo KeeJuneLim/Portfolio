@@ -1,14 +1,14 @@
 <idspace id="NPC">
 	<category type="Normal">
-		<class ClassId="10001" ClassName="Zombie" Script="CommonNormalNPCScript" Faction="Monster" BaseHP="100" HPPerLevel="15" BaseAttackPower="7" AttackPowerPerLevel="2" BaseDefense="5" DefensePerLevel="2"/>
-		<class ClassId="10002" ClassName="Skeleton" Script="CommonNormalNPCScript" Faction="Monster" BaseHP="85" HPPerLevel="10" BaseAttackPower="10" AttackPowerPerLevel="2" BaseDefense="4" DefensePerLevel="1"/>
-		<class ClassId="10003" ClassName="Ghost" Script="CommonNormalNPCScript" Faction="Monster" BaseHP="70" HPPerLevel="7" BaseAttackPower="12" AttackPowerPerLevel="3" BaseDefense="3" DefensePerLevel="1"/>
-		<class ClassId="10004" ClassName="Grandpa" Script="CommonNormalNPCScript" Faction="Villager" BaseHP="100000" HPPerLevel="10000" BaseAttackPower="0" AttackPowerPerLevel="0" BaseDefense="0" DefensePerLevel="0"/>
-		<class ClassId="10005" ClassName="Police" Script="CommonNormalNPCScript" Faction="VillageSoldier" BaseHP="100000" HPPerLevel="10000" BaseAttackPower="30" AttackPowerPerLevel="0" BaseDefense="500" DefensePerLevel="0"/>
+		<class ClassId="10001" ClassName="Zombie" Script="CommonNormalNPCScript" Faction="Monster" SkillList="{MonsterNormalAttack,BossActiveSkill}" BaseHP="100" HPPerLevel="15" BaseAttackPower="7" AttackPowerPerLevel="2" BaseDefense="5" DefensePerLevel="2"/>
+		<class ClassId="10002" ClassName="Skeleton" Script="CommonNormalNPCScript" Faction="Monster" SkillList="{MonsterNormalAttack}" BaseHP="85" HPPerLevel="10" BaseAttackPower="10" AttackPowerPerLevel="2" BaseDefense="4" DefensePerLevel="1"/>
+		<class ClassId="10003" ClassName="Ghost" Script="CommonNormalNPCScript" Faction="Monster" SkillList="{MonsterNormalAttack}" BaseHP="70" HPPerLevel="7" BaseAttackPower="12" AttackPowerPerLevel="3" BaseDefense="3" DefensePerLevel="1"/>
+		<class ClassId="10004" ClassName="Grandpa" Script="CommonNormalNPCScript" Faction="Villager" SkillList="{MonsterNormalAttack}" BaseHP="100000" HPPerLevel="10000" BaseAttackPower="0" AttackPowerPerLevel="0" BaseDefense="0" DefensePerLevel="0"/>
+		<class ClassId="10005" ClassName="Police" Script="CommonNormalNPCScript" Faction="VillageSoldier" SkillList="{MonsterNormalAttack}" BaseHP="100000" HPPerLevel="10000" BaseAttackPower="30" AttackPowerPerLevel="0" BaseDefense="500" DefensePerLevel="0"/>
 	</category>
 	<category type="Boss">
-		<class ClassId="20001" ClassName="ZombieKing" Script="CommonBossScript" Faction="Monster" BaseHP="100" HPPerLevel="15" BaseAttackPower="7" AttackPowerPerLevel="2" BaseDefense="5" DefensePerLevel="2"/>
-		<class ClassId="20002" ClassName="SkeletonKing" Script="CommonBossScript" Faction="Monster" BaseHP="85" HPPerLevel="10" BaseAttackPower="10" AttackPowerPerLevel="2" BaseDefense="4" DefensePerLevel="1"/>
-		<class ClassId="20003" ClassName="GhostKing" Script="CommonBossScript" Faction="Monster" BaseHP="70" HPPerLevel="7" BaseAttackPower="12" AttackPowerPerLevel="3" BaseDefense="3" DefensePerLevel="1"/>
+		<class ClassId="20001" ClassName="ZombieKing" Script="CommonBossScript" Faction="Monster" SkillList="{MonsterNormalAttack,BossActiveSkill}" BaseHP="100" HPPerLevel="15" BaseAttackPower="7" AttackPowerPerLevel="2" BaseDefense="5" DefensePerLevel="2"/>
+		<class ClassId="20002" ClassName="SkeletonKing" Script="CommonBossScript" Faction="Monster" SkillList="{MonsterNormalAttack,BossActiveSkill}" BaseHP="85" HPPerLevel="10" BaseAttackPower="10" AttackPowerPerLevel="2" BaseDefense="4" DefensePerLevel="1"/>
+		<class ClassId="20003" ClassName="GhostKing" Script="CommonBossScript" Faction="Monster" SkillList="{MonsterNormalAttack,BossActiveSkill}" BaseHP="70" HPPerLevel="7" BaseAttackPower="12" AttackPowerPerLevel="3" BaseDefense="3" DefensePerLevel="1"/>
 	</category>
 </idspace>

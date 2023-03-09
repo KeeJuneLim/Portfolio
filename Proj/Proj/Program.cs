@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
+using Proj.Enum;
 
 namespace Proj {
     class Program {

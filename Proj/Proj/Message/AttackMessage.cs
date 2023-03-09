@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Proj.Message {
+    class AttackMessage : BaseMessage {
+        public int AttackerAttackPower;
+        public int DefenderDefense;
+
+    }
+}

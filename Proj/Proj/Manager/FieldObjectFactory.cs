@@ -2,6 +2,7 @@
 using System.Numerics;
 using Proj.Component;
 using Proj.Enum;
+using Proj.Object;
 
 namespace Proj {
     class FieldObjectFactory {
@@ -18,27 +19,25 @@ namespace Proj {
             }
         }
 
-        public FieldObject CreateFieldObject(string idspace, string className, int level, Vector2 position) {
-            var fieldObject = new FieldObject() {
-                Idspace = idspace,
+        public FieldObject CreateSkillObject(FieldObject user, FieldMap currentMap, string className, Vector2 position) {
+            var skillObject = new SkillObject() {
+                User = user,
                 ClassName = className,
                 Position = position
             };
-           
 
-            switch (idspace) {
-                case Idspace.Skill:
-                    break;
+            skillObject.Components.Add(new MessageComponent());
+
+
+            foreach (var component in skillObject.Components) {
+                component.Owner = skillObject;
             }
+            skillObject.CurrentMap = currentMap;
 
-            foreach (var component in fieldObject.Components) {
-                component.Owner = fieldObject;
-            }
-
-            return fieldObject;
+            return skillObject;
         }
 
-        public FieldObject CreateFieldChar(string idspace, string className, int level, Vector2 position) {
+        public FieldObject CreateFieldChar(string idspace, FieldMap currentMap, string className, int level, Vector2 position) {
             
             if (idspace != Idspace.PC && idspace != Idspace.NPC) {
                 Console.WriteLine("Wrong Data - Object which Creating is not FieldChar");
@@ -55,19 +54,21 @@ namespace Proj {
 
             switch (idspace) {
                 case Idspace.PC:
-                    fieldChar.Components.Add(new DataComponent());
                     fieldChar.Components.Add(new SkillInventoryComponent());
+                    fieldChar.Components.Add(new MessageComponent());
                     break;
                 case Idspace.NPC:
-                    fieldChar.Components.Add(new DataComponent());
                     fieldChar.Components.Add(new SkillInventoryComponent());
+                    fieldChar.Components.Add(new MessageComponent());
                     break;
-         
             }
 
             foreach (var component in fieldChar.Components) {
                 component.Owner = fieldChar;
             }
+
+            fieldChar.OnInitialize();
+            fieldChar.CurrentMap = currentMap;
 
             return fieldChar;
         }

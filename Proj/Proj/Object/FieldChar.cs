@@ -1,15 +1,18 @@
 ﻿
 using System;
+using Proj.Enum;
+using Proj.Message;
 
 namespace Proj {
     class FieldChar : FieldObject {
         public int Level;
 
         public override void OnInitialize() {
-            Console.WriteLine($"FieldChar Created - Name: {ClassName}, Level: {Level}, Position: {Position}");
+            base.OnInitialize();
         }
 
         public override void OnUpdate(double dt) {
+            base.OnUpdate(dt);
 
         }
     }

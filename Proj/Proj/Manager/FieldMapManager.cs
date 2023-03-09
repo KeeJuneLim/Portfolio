@@ -16,8 +16,8 @@ namespace Proj {
 
             foreach (var field in fieldInfo) {
                 FieldMaps.Add(new FieldMap {
-                    ClassName = field["ClassName"],
-                    ClassId = int.Parse(field["ClassId"])
+                    ClassName = field.GetString(PropName.ClassName),
+                    ClassId = field.GetInt(PropName.ClassId)
                 });
             }
 

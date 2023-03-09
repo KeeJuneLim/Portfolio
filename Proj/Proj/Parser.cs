@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Numerics;
 using System.Xml;
+using Proj.Enum;
 
 namespace Proj {
     class Parser {
 
-        private static readonly Dictionary<string, List<Dictionary<string, List<Dictionary<string, string>>>>> IdspaceList = new();
-        private static readonly Dictionary<string, List<Dictionary<string, string>>> CategoryList = new();
-        private static readonly List<Dictionary<string, string>> ClassList = new ();
+        private static readonly Dictionary<string, List<Dictionary<string, List<ClassData>>>> IdspaceList = new();
+        private static readonly Dictionary<string, List<ClassData>> CategoryList = new();
+        private static readonly List<ClassData> ClassList = new();
 
 
 
@@ -35,7 +36,7 @@ namespace Proj {
                         return;
                     }
 
-                    var categoryData = new List<Dictionary<string, List<Dictionary<string, string>>>>();
+                    var categoryData = new List<Dictionary<string, List<ClassData>>>();
                     foreach (var categories in XmlDoc.LastChild) {
                         var category = (XmlNode)categories;
                         var categoryName = category.Attributes?[0].Value;
@@ -44,62 +45,53 @@ namespace Proj {
                             return;
                         }
 
-                        var categoryClasses = new List<Dictionary<string, string>> ();
+                        var categoryClasses = new List<ClassData>();
 
                         foreach (var classes in category) {
                             var c = (XmlNode)classes;
-                            var classProps = new Dictionary<string, string>();
+                            var classProps = new ClassData();
 
                             foreach (var prop in c.Attributes) {
                                 var p = (XmlNode)prop;
                                 var propName = p.Name;
                                 var propValue = p.Value;
 
-                                classProps.Add(propName, propValue);
+                                classProps.Add(idspace, categoryName, propName, propValue);
                             }
                             ClassList.Add(classProps);
-                            categoryClasses.Add(classProps);
+                            categoryClasses.Add(new ClassData(classProps));
                         }
 
-                        CategoryList[categoryName] = categoryClasses;
+                        CategoryList[categoryName] = new List<ClassData>(categoryClasses);
                         categoryData.Add(CategoryList);
                     }
-                    IdspaceList[idspace] = categoryData;
+                    IdspaceList[idspace] = new List<Dictionary<string, List<ClassData>>>(categoryData);
                 }
             }
         }
 
-        public static List<Dictionary<string, List<Dictionary<string, string>>>> GetIdspace(string idspace) {
-            return new List<Dictionary<string, List<Dictionary<string, string>>>>(IdspaceList[idspace]);
+        public static List<Dictionary<string, List<ClassData>>> GetIdspace(string idspace) {
+            return new List<Dictionary<string, List<ClassData>>>(IdspaceList[idspace]);
         }
 
-        public static List<Dictionary<string, string>> GetCategory(string idspace, string category) {
-            return new List<Dictionary<string, string>>(CategoryList[category]);
+        public static List<ClassData> GetCategory(string idspace, string category) {
+            return new List<ClassData>(CategoryList[category]);
         }
 
-        public static Dictionary<string, string> GetClass(string className) {
-
+        public static ClassData GetClass(string className) {
             foreach (var @class in ClassList) {
-                foreach (var prop in @class) {
-                    if (string.Equals(prop.Key, "ClassName")) {
-                        if (prop.Value == className) {
-                            return new Dictionary<string, string>(@class);
-                        }
-                    }
+                if (string.Equals(@class.GetString(PropName.ClassName), className)) {
+                    return @class;
                 }
             }
 
             return null;
         }
 
-        public static Dictionary<string, string> GetClass(int classId) {
+        public static ClassData GetClass(int classId) {
             foreach (var @class in ClassList) {
-                foreach (var prop in @class) {
-                    if (string.Equals(prop.Key, "classId")) {
-                        if (prop.Value == classId.ToString()) {
-                            return new Dictionary<string, string>(@class);
-                        }
-                    }
+                if (Equals(@class.GetInt(PropName.ClassId), classId)) {
+                    return @class;
                 }
             }
 
@@ -109,7 +101,7 @@ namespace Proj {
         public static int GetInt(string className, string propName) {
             var @class = GetClass(className);
 
-            foreach (var prop in @class) {
+            foreach (KeyValuePair<string, string> prop in @class) {
                 if (prop.Key == propName) {
                     return int.Parse(prop.Value);
                 }
@@ -121,7 +113,7 @@ namespace Proj {
         public static int GetInt(int classId, string propName) {
             var @class = GetClass(classId);
 
-            foreach (var prop in @class) {
+            foreach (KeyValuePair<string, string> prop in @class) {
                 if (prop.Key == propName) {
                     return int.Parse(prop.Value);
                 }
@@ -133,7 +125,7 @@ namespace Proj {
         public static bool GetBool(string className, string propName) {
             var @class = GetClass(className);
 
-            foreach (var prop in @class) {
+            foreach (KeyValuePair<string, string> prop in @class) {
                 if (prop.Key == propName) {
                     return bool.Parse(prop.Value);
                 }
@@ -145,7 +137,7 @@ namespace Proj {
         public static bool GetBool(int classId, string propName) {
             var @class = GetClass(classId);
 
-            foreach (var prop in @class) {
+            foreach (KeyValuePair<string, string> prop in @class) {
                 if (prop.Key == propName) {
                     return bool.Parse(prop.Value);
                 }
@@ -157,7 +149,7 @@ namespace Proj {
         public static double GetDouble(string className, string propName) {
             var @class = GetClass(className);
 
-            foreach (var prop in @class) {
+            foreach (KeyValuePair<string, string> prop in @class) {
                 if (prop.Key == propName) {
                     return double.Parse(prop.Value);
                 }
@@ -169,7 +161,7 @@ namespace Proj {
         public static double GetDouble(int classId, string propName) {
             var @class = GetClass(classId);
 
-            foreach (var prop in @class) {
+            foreach (KeyValuePair<string, string> prop in @class) {
                 if (prop.Key == propName) {
                     return double.Parse(prop.Value);
                 }
@@ -181,7 +173,7 @@ namespace Proj {
         public static string GetString(string className, string propName) {
             var @class = GetClass(className);
 
-            foreach (var prop in @class) {
+            foreach (KeyValuePair<string, string> prop in @class) {
                 if (prop.Key == propName) {
                     return prop.Value;
                 }
@@ -193,7 +185,7 @@ namespace Proj {
         public static string GetString(int classId, string propName) {
             var @class = GetClass(classId);
 
-            foreach (var prop in @class) {
+            foreach (KeyValuePair<string, string> prop in @class) {
                 if (prop.Key == propName) {
                     return prop.Value;
                 }
@@ -205,7 +197,7 @@ namespace Proj {
         public static Vector2 GetVector2(string className, string propName) {
             var @class = GetClass(className);
 
-            foreach (var prop in @class) {
+            foreach (KeyValuePair<string, string> prop in @class) {
                 if (prop.Key == propName) {
                     var str = prop.Value;
                     string[] temp = str.Substring(1, str.Length - 2).Split(',');
@@ -220,7 +212,7 @@ namespace Proj {
         public static Vector2 GetVector2(int classId, string propName) {
             var @class = GetClass(classId);
 
-            foreach (var prop in @class) {
+            foreach (KeyValuePair<string, string> prop in @class) {
                 if (prop.Key == propName) {
                     var str = prop.Value;
                     string[] temp = str.Substring(1, str.Length - 2).Split(',');

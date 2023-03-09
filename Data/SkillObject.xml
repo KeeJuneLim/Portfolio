@@ -1,0 +1,10 @@
+<idspace id="SkillObject">
+	<category user="PCSkills">
+		<class ClassId="5001" ClassName="PlayerNormalAttackObject" Radius="5" Shape="Circle" UpdateInterval="1" LifeTime="1"/>
+		<class ClassId="5002" ClassName="PaladinActiveSkillObject" Radius="10" Shape="Circle" UpdateInterval="1" LifeTime="5"/>
+	</category>
+	<category user="NPCSkills">
+		<class ClassId="50001" ClassName="MonsterNormalAttackObject" Radius="5" Shape="Circle" UpdateInterval="1" LifeTime="1"/>
+		<class ClassId="50002" ClassName="BossActiveSkillObject" Radius="10" Shape="Circle" UpdateInterval="1" LifeTime="5"/>
+	</category>
+</idspace>

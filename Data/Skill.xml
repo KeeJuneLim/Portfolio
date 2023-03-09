@@ -1,0 +1,10 @@
+<idspace id="Skill">
+	<category user="PCSkills">
+		<class ClassId="4001" ClassName="PlayerNormalAttack" SkillObject="PlayerNormalAttackObject" DamageMultiplier="100" BaseCooldown="2"/>
+		<class ClassId="4002" ClassName="PaladinActiveSkill" SkillObject="PaladinActiveSkillObject" DamageMultiplier="200" BaseCooldown="10"/>
+	</category>
+	<category user="NPCSkills">
+		<class ClassId="40001" ClassName="MonsterNormalAttack" SkillObject="MonsterNormalAttackObject" DamageMultiplier="100" BaseCooldown="2"/>
+		<class ClassId="40002" ClassName="BossActiveSkill" SkillObject="BossActiveSkillObject" DamageMultiplier="200" BaseCooldown="10"/>
+	</category>
+</idspace>
