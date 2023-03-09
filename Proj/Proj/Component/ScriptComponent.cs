@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Proj.Component {
     class ScriptComponent : BaseComponent{
-        public override void OnInitialize() {
-            base.OnInitialize();
+        public override void Initialize() {
+            base.Initialize();
         }
 
-        public override void OnUpdate(double dt) {
-            base.OnUpdate(dt);
+        public override void Update(double dt) {
+            base.Update(dt);
 
 
         }

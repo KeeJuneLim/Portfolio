@@ -1,5 +1,5 @@
 <idspace id="Faction">
-	<category>
+	<category type="Normal">
 		<class FactionName="Player" HostileFaction="{Monster}" FriendlyFaction="{Player}"/>
 		<class FactionName="Monster" HostileFaction="{Player,VillageSoldier}" FriendlyFaction="{Monster}"/>
 		<class FactionName="Villager" HostileFaction="{Monster}" FriendlyFaction="{Player,Villager,VillageSoldier}"/>

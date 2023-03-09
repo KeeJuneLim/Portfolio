@@ -4,12 +4,11 @@ namespace Proj {
     class BaseComponent {
         public FieldObject Owner;
 
-        public virtual void OnInitialize() {
+        public virtual void Initialize() {
 
         }
 
-        public virtual void OnUpdate(double dt) {
-            Console.WriteLine($"{Owner.ClassName}'s Compoent 'DataComp' Updated");
+        public virtual void Update(double dt) {
         }
     }
 }
