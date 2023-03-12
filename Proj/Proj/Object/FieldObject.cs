@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using Proj.Component;
 using Proj.Enum;
+using Proj.Manager;
 using Proj.Message;
 using Proj.Provider;
 
@@ -11,15 +12,21 @@ namespace Proj {
         public string Idspace;
         public string ClassName;
 
+        public double Radius;
+
         public FieldMap CurrentMap;
         public Vector2 Position;
 
         public List<BaseComponent> Components = new();
         public DataProvider DataProvider = new();
 
+        public int Handle;
+
         public virtual void OnInitialize() {
+            Handle = HandleManager.Inst.CreateHandle();
             DataProvider.Initialize(ClassName);
 
+            Radius = DataProvider.Data.GetDouble(PropName.Radius);
             foreach (var component in Components) {
                 component.Initialize();
             }
@@ -48,5 +55,24 @@ namespace Proj {
                 }
             }
         }
+
+        public bool IsInRange(Vector2 targetPosition, double range) {
+            var distance = (Position - targetPosition).Length();
+
+            if (distance <= Radius + range) {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool IsCollided(FieldObject target) {
+            if (IsInRange(target.Position, target.Radius)) {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

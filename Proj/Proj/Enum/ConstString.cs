@@ -21,6 +21,7 @@
 
 
     class PropName {
+        // PC/NPC
         public const string ClassName = "ClassName";
         public const string ClassId = "ClassId";
         public const string NPCName = "NPCName";
@@ -39,6 +40,10 @@
         public const string DefensePerLevel = "DefensePerLevel";
 
         public const string SkillList = "SkillList";
+
+        public const string RewardExp = "RewardExp";
+        public const string RewardMoney = "RewardMoney";
+
 
         // Skill
         public const string SkillObjectName = "SkillObjectName";
@@ -67,5 +72,8 @@
         public const string AddBuff = "AddBuff";
         public const string RemoveBuff = "RemoveBuff";
         public const string Attack = "Attack";
+
+        public const string Killed = "Killed";
+
     }
 }

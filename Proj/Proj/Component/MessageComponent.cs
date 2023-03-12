@@ -37,7 +37,11 @@ namespace Proj.Component {
                 case MessageType.Attack:
                     // 공격
                     if (msg.Message is AttackMessage attackMessage) {
-                        Console.WriteLine($"ComponentOwner: {Owner.ClassName} / AttackPower: {attackMessage.AttackerAttackPower} / Defense: {attackMessage.DefenderDefense}");
+                        foreach (var comp in Owner.Components) {
+                            if (comp is BattleSequenceComponent battle) {
+                                battle.ProcessBattleSequence(attackMessage);
+                            }
+                        }
                     }
 
                     break;

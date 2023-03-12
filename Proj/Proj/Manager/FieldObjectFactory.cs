@@ -56,10 +56,12 @@ namespace Proj {
                 case Idspace.PC:
                     fieldChar.Components.Add(new SkillInventoryComponent());
                     fieldChar.Components.Add(new MessageComponent());
+                    fieldChar.Components.Add(new BattleSequenceComponent());
                     break;
                 case Idspace.NPC:
                     fieldChar.Components.Add(new SkillInventoryComponent());
                     fieldChar.Components.Add(new MessageComponent());
+                    fieldChar.Components.Add(new BattleSequenceComponent());
                     break;
             }
 

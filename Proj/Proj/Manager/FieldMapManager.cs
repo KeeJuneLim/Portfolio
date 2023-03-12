@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Proj.Enum;
 
 namespace Proj {
@@ -27,9 +28,14 @@ namespace Proj {
         }
 
         public void OnUpdate(double dt) {
-            foreach (var fieldMap in instance.FieldMaps) {
+            //TODO: 성능 비교 해봐야 함
+            //foreach (var fieldMap in instance.FieldMaps) {
+            //    fieldMap.OnUpdate(dt);
+            //}
+
+            Parallel.ForEach(FieldMaps, fieldMap => {
                 fieldMap.OnUpdate(dt);
-            }
+            });
         }
     }
 }

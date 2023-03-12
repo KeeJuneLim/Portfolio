@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Proj.Message {
-    class AttackMessage : BaseMessage {
-        public int AttackerHandle;
-        public int AttackerAttackPower;
+    class KilledMessage : BaseMessage {
+        public int KilledObjectHandle;
+        public int RewardExp;
+        public int RewardMoney;
     }
 }
