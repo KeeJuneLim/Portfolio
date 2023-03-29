@@ -44,12 +44,12 @@ namespace Server {
                 switch (typeName) {
                     case "Packet.PKS_CZ_REQUEST_ECHO":
                         var pks_cz_test = ZeroFormatterSerializer.Deserialize<PKS_CZ_REQUEST_ECHO>(data, headerLength + 1);
-                        ClientReceive.Packet.OnReceiveClientMessage(this, pks_cz_test);
+                        ClientReceive.OnReceiveClientMessage(this, pks_cz_test);
                         break;
 
                     case "Packet.PKS_CZ_TEST2":
                         var pks_cz_test2 = ZeroFormatterSerializer.Deserialize<PKS_CZ_TEST2>(data, headerLength + 1);
-                        ClientReceive.Packet.OnReceiveClientMessage(this, pks_cz_test2);
+                        ClientReceive.OnReceiveClientMessage(this, pks_cz_test2);
                         break;
                 }
 

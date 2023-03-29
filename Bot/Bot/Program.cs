@@ -14,7 +14,7 @@ namespace Bot {
 
         private static List<Thread> threads = new();
 
-        private const int BotCount = 1;
+        private const int BotCount = 10;
         static void Main(string[] args) {
 
             for (int i = 0; i < BotCount; ++i) {
@@ -25,7 +25,6 @@ namespace Bot {
             foreach (var thread in threads) {
                 thread.Start();
             }
-
         }
     }
 }

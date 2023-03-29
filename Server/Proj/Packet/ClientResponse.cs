@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Packet;
 
-namespace Server.ClientResponse {
+namespace Server {
     class ClientResponse {
         public static void OnResponseClientMessage(Client client, PKS_CZ_REQUEST_ECHO pks) {
             if (pks.IsSuccess) {

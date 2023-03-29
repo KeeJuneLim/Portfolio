@@ -1,8 +1,8 @@
 ﻿using System;
 using Packet;
 
-namespace Server.ClientReceive {
-    class Packet {
+namespace Server {
+    class ClientReceive {
         public static void OnReceiveClientMessage(Client client, PKS_CZ_REQUEST_ECHO pks) {
             if (pks.IsSuccess) {
                 var message = pks.Command;
@@ -13,7 +13,7 @@ namespace Server.ClientReceive {
                     return;
                 }
 
-                ClientResponse.ClientResponse.OnResponseClientMessage(client, pks);
+                ClientResponse.OnResponseClientMessage(client, pks);
             }
         }
 
