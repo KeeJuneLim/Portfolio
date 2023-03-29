@@ -1,9 +1,9 @@
 ﻿
 using System;
-using Proj.Enum;
-using Proj.Message;
+using Server.Message;
+using Server.Enum;
 
-namespace Proj {
+namespace Server {
     class FieldChar : FieldObject {
         public int MaxHP;
         public int HP;

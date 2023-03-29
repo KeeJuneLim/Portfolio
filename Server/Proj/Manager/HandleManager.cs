@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proj.Manager {
+namespace Server.Manager {
     class HandleManager {
         private static int handleIndex = 1;
         private static HandleManager instance;

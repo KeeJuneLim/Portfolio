@@ -6,7 +6,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proj {
+namespace Server {
     class ClassData : IEnumerable {
         private readonly Dictionary<string, string> Data = new();
 

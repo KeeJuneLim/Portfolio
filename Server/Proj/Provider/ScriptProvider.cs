@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proj.Provider {
+namespace Server.Provider {
     //class ScriptProvider {
     //    public void Initialize(string className) {
     //        if (Data == null) {

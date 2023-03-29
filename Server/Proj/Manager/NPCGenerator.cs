@@ -4,9 +4,9 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using Proj.Enum;
+using Server.Enum;
 
-namespace Proj.Manager {
+namespace Server.Manager {
     class NPCGenerator {
         private FieldMap Owner;
         private Random RandomGenerator = new();

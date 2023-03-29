@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Numerics;
-using Proj.Component;
-using Proj.Enum;
-using Proj.Object;
+using Server.Component;
+using Server.Enum;
+using Server.Object;
 
-namespace Proj {
+namespace Server.Manager {
     class FieldObjectFactory {
 
         private static FieldObjectFactory instance;

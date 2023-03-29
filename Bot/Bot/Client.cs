@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Win32.SafeHandles;
+using Bot;
+using Packet;
+using ZeroFormatter;
 
 namespace Bot {
     class Client : SocketAsyncEventArgs {
@@ -27,25 +25,38 @@ namespace Bot {
             SetBuffer(new byte[1024], 0, 1024);
 
             // connect receive message event
-            Completed += OnReceiveServerMessage;
-            Console.WriteLine("ReceiveEvent");
+            Completed += OnReceiveClientMessage;
 
             // invoke IOCP
             socket.ReceiveAsync(this);
         }
 
         // invoke when received message from server
-        private void OnReceiveServerMessage(object sender, SocketAsyncEventArgs e) {
+        private void OnReceiveClientMessage(object sender, SocketAsyncEventArgs e) {
             // connected
             if (socket.Connected && BytesTransferred > 0) {
                 byte[] data = e.Buffer;
 
                 SetBuffer(new byte[1024], 0, 1024);
-                var pks = ZeroFormatter.ZeroFormatterSerializer.Deserialize<PKS_CZ_TEST>(data);
+                var headerLength = data[0];
+                var typeData = new byte[headerLength];
 
-                if (pks.IsSuccess) {
-                    var message = pks.Command;
-                    Console.WriteLine(message);
+                for (int i = 0; i < headerLength; ++i) {
+                    typeData[i] = data[i + 1];
+                }
+
+                var typeName = ZeroFormatterSerializer.Deserialize<string>(typeData);
+
+                switch (typeName) {
+                    case "Packet.PKS_ZC_RESPONSE_ECHO":
+                        var pks_zc_response_echo = ZeroFormatterSerializer.Deserialize<PKS_ZC_RESPONSE_ECHO>(data, headerLength + 1);
+                        Response.OnReceiveClientMessage(this, pks_zc_response_echo);
+                        break;
+
+                    case "Packet.PKS_ZC_TEST":
+                        var pks_zc_test = ZeroFormatterSerializer.Deserialize<PKS_ZC_TEST>(data, headerLength + 1);
+                        Response.OnReceiveClientMessage(this, pks_zc_test);
+                        break;
                 }
 
                 // invoke IOCP
@@ -59,23 +70,39 @@ namespace Bot {
         // could be made as async, but not necessarily
         // private SocketAsyncEventArgs sendArgs = new SocketAsyncEventArgs();
         public void Send(PKS_BASE pks) {
-            if (pks is PKS_CZ_TEST packet) {
-                var sendData = ZeroFormatter.ZeroFormatterSerializer.Serialize(packet);
-                socket.Send(sendData, sendData.Length, SocketFlags.None);
+            var typeName = pks.GetType().FullName;
+            var typeArr = ZeroFormatterSerializer.Serialize(typeName);
+            byte typeSize = (byte)typeArr.Length;
+
+            byte[] data = new byte[1024];
+            switch (typeName) {
+                case "Packet.PKS_CZ_REQUEST_ECHO":
+                    data = ZeroFormatterSerializer.Serialize(pks as PKS_CZ_REQUEST_ECHO);
+                    break;
+                case "Packet.PKS_CZ_TEST2":
+                    data = ZeroFormatterSerializer.Serialize(pks as PKS_CZ_TEST2);
+                    break;
             }
 
-            //sendArgs.SetBuffer(sendData, 0, sendData.Length);
-            //socket.SendAsync(sendArgs);
+            var sendData = new byte[data.Length + typeArr.Length + 1];
+
+            sendData[0] = typeSize;
+            typeArr.CopyTo(sendData, 1);
+            data.CopyTo(sendData, typeArr.Length + 1);
+
+            socket.Send(sendData, sendData.Length, SocketFlags.None);
         }
 
         private void Disconnect() {
-            //SetBuffer(null, 0, 0);
-            //Completed -= OnReceiveServerMessage;
-            //socket.DisconnectAsync(this);
-            //Dispose();
+            SetBuffer(null, 0, 0);
+            Completed -= OnReceiveClientMessage;
+            socket.DisconnectAsync(this);
+            Dispose();
 
             var remoteAddress = (IPEndPoint)socket.RemoteEndPoint;
-            Console.WriteLine($"Disconnected :  (From: {remoteAddress.Address}:{remoteAddress.Port}, Connection time: {DateTime.Now})");
+            if (remoteAddress != null) {
+                Console.WriteLine($"[{remoteAddress.Port}] - Disconnected, Connection time: {DateTime.Now})");
+            }
         }
     }
 }

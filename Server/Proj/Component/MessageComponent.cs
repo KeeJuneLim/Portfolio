@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Proj.Enum;
-using Proj.Message;
+using Server.Enum;
+using Server.Message;
 
-namespace Proj.Component {
+namespace Server.Component {
     class MessageComponent : BaseComponent {
         private Queue<MessageContainer> Messages = new();
 

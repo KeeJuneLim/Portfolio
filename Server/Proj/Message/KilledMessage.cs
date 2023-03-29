@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proj.Message {
+namespace Server.Message {
     class KilledMessage : BaseMessage {
         public int KilledObjectHandle;
         public int RewardExp;

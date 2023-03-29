@@ -1,4 +1,4 @@
-﻿namespace Proj.Enum {
+﻿namespace Server.Enum {
     class Idspace {
         public const string PC = "PC";
         public const string NPC = "NPC";

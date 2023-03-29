@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
-using Proj.Enum;
-using Proj.Manager;
-using Proj.Message;
+using Server.Enum;
+using Server.Message;
+using Server.Manager;
 
-namespace Proj {
+namespace Server {
     class FieldMap {
         public string ClassName {
             get;

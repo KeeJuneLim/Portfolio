@@ -4,10 +4,11 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using Proj.Enum;
-using Proj.Provider;
+using Server.Enum;
+using Server.Manager;
+using Server.Provider;
 
-namespace Proj {
+namespace Server {
     class SkillInstance {
         public FieldObject User;
         public const string Idspace = Enum.Idspace.Skill;

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
-using Proj.Component;
-using Proj.Enum;
-using Proj.Manager;
-using Proj.Message;
-using Proj.Provider;
+using Server.Component;
+using Server.Enum;
+using Server.Manager;
+using Server.Message;
+using Server.Provider;
 
-namespace Proj {
+namespace Server {
     class FieldObject {
         public string Idspace;
         public string ClassName;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proj.Provider {
+namespace Server.Provider {
     class DataProvider {
         public ClassData Data;
         public void Initialize(string className) {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Proj.Component {
+namespace Server.Component {
     class ScriptComponent : BaseComponent{
         public override void Initialize() {
             base.Initialize();

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Proj {
+namespace Server {
     class BaseComponent {
         public FieldObject Owner;
 

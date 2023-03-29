@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Proj.Enum;
+using Server.Enum;
 
-namespace Proj {
+namespace Server.Manager {
     class FieldMapManager {
         private static FieldMapManager instance;
         private List<FieldMap> FieldMaps = new ();

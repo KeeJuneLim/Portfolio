@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Proj.Enum;
+using Server.Enum;
 
-namespace Proj.Component {
+namespace Server.Component {
     class SkillInventoryComponent : BaseComponent {
         private List<SkillInstance> SkillList = new ();
         public override void Initialize() {

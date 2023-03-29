@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
+using Packet;
+using Server.Manager;
+using ZeroFormatter;
 
-namespace Proj {
+namespace Server {
     class Client : SocketAsyncEventArgs {
         private Socket socket;
 
-        private IPEndPoint remoteAddress;
+        internal IPEndPoint remoteAddress;
 
         public Client(Socket s) {
             socket = s;
+            socket.Blocking = false;
             SetBuffer(new byte[1024], 0, 1024);
             UserToken = socket;
 
@@ -21,14 +21,7 @@ namespace Proj {
             socket.ReceiveAsync(this);
 
             remoteAddress = (IPEndPoint)socket.RemoteEndPoint;
-            Console.WriteLine($"Client : (From: {remoteAddress.Address}:{remoteAddress.Port}, Connection time: {DateTime.Now})");
-
-            // send result to client
-            var pks = new PKS_CZ_TEST {
-                IsSuccess = true,
-                Command = "Connected to Server!"
-            };
-            Send(pks);
+            Console.WriteLine($"[{remoteAddress.Port}] - Connected, Connection time: {DateTime.Now})");
         }
 
         // invoke when received message from client
@@ -39,24 +32,25 @@ namespace Proj {
 
                 SetBuffer(new byte[1024], 0, 1024);
 
-                var pks = ZeroFormatter.ZeroFormatterSerializer.Deserialize<PKS_CZ_TEST>(data);
+                var headerLength = data[0];
+                var typeData = new byte[headerLength];
 
-                if (pks.IsSuccess) {
-                    var message = pks.Command;
+                for (int i = 0; i < headerLength; ++i) {
+                    typeData[i] = data[i + 1];
+                }
 
-                    Console.WriteLine(message);
-                    if (message.Equals("exit", StringComparison.OrdinalIgnoreCase)) {
-                        Disconnect();
-                        return;
-                    }
+                var typeName = ZeroFormatterSerializer.Deserialize<string>(typeData);
+                
+                switch (typeName) {
+                    case "Packet.PKS_CZ_REQUEST_ECHO":
+                        var pks_cz_test = ZeroFormatterSerializer.Deserialize<PKS_CZ_REQUEST_ECHO>(data, headerLength + 1);
+                        ClientReceive.Packet.OnReceiveClientMessage(this, pks_cz_test);
+                        break;
 
-                    // for test
-                    var echo = new PKS_CZ_TEST {
-                        IsSuccess = true,
-                        Command = $"Echo - {pks.Command}"
-                    };
-
-                    Send(echo);
+                    case "Packet.PKS_CZ_TEST2":
+                        var pks_cz_test2 = ZeroFormatterSerializer.Deserialize<PKS_CZ_TEST2>(data, headerLength + 1);
+                        ClientReceive.Packet.OnReceiveClientMessage(this, pks_cz_test2);
+                        break;
                 }
 
                 socket.ReceiveAsync(this);
@@ -69,21 +63,37 @@ namespace Proj {
 
         // could be made as async, but not necessarily
         //private SocketAsyncEventArgs sendArgs = new();
-        private void Send(PKS_BASE pks) {
-            if (pks is PKS_CZ_TEST packet) {
-                var sendData = ZeroFormatter.ZeroFormatterSerializer.Serialize<PKS_CZ_TEST>(packet);
-                Console.WriteLine($"Sending Message To {remoteAddress.Address}:{remoteAddress.Port}: [{packet.Command}]");
-                socket.Send(sendData, sendData.Length, SocketFlags.None);
+        internal void Send(PKS_BASE pks) {
+            var typeName = pks.GetType().FullName;
+            var typeArr = ZeroFormatterSerializer.Serialize(typeName);
+            byte typeSize = (byte)typeArr.Length;
+            byte[] data = new byte[1024];
+            switch (typeName) {
+                case "Packet.PKS_ZC_RESPONSE_ECHO":
+                    data = ZeroFormatterSerializer.Serialize(pks as PKS_ZC_RESPONSE_ECHO);
+
+                    break;
+                case "Packet.PKS_ZC_TEST":
+                    data = ZeroFormatterSerializer.Serialize(pks as PKS_ZC_TEST);
+                    break;
             }
 
-            //if (pks is PKS_CZ_TEST packet) {
-            //    var sendData = ZeroFormatter.ZeroFormatterSerializer.Serialize<PKS_CZ_TEST>(packet);
+            var sendData = new byte[data.Length + typeArr.Length + 1];
+
+            sendData[0] = typeSize;
+            typeArr.CopyTo(sendData, 1);
+            data.CopyTo(sendData, typeArr.Length + 1);
+
+            socket.Send(sendData);
+            //if (pks is PKS_CZ_REQUEST_ECHO packet) {
+            //    var sendData = ZeroFormatter.ZeroFormatterSerializer.Serialize<PKS_CZ_REQUEST_ECHO>(packet);
             //    sendArgs.SetBuffer(sendData, 0, sendData.Length);
             //    socket.SendAsync(sendArgs);
             //}
         }
 
-        private void Disconnect() {
+        internal void Disconnect() {
+            ClientManager.Inst.RemoveClient(this);
             SetBuffer(null, 0, 0);
             Completed -= OnReceiveClientMessage;
             socket.DisconnectAsync(this);

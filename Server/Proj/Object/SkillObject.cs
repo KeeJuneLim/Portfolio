@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Proj.Enum;
-using Proj.Message;
+using Server.Enum;
+using Server.Message;
 
-namespace Proj.Object {
+namespace Server.Object {
     class SkillObject : FieldObject {
         private const string Idspace = Enum.Idspace.SkillObject;
         private string Shape;

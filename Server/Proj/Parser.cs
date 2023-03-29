@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Numerics;
 using System.Xml;
-using Proj.Enum;
+using Server.Enum;
 
-namespace Proj {
+namespace Server {
     class Parser {
 
         private static readonly Dictionary<string, List<Dictionary<string, List<ClassData>>>> IdspaceList = new();

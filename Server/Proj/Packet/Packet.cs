@@ -2,22 +2,17 @@
 using System.Runtime.InteropServices;
 using ZeroFormatter;
 
-namespace Proj {
+namespace Packet {
 
     [ZeroFormattable]
     [Serializable]
     public class PKS_BASE {
-        private Type Type;
-
-        public PKS_BASE() {
-            Type = GetType();
-        }
     }
 
 
     [ZeroFormattable]
     [Serializable]
-    public class PKS_CZ_TEST : PKS_BASE{
+    public class PKS_CZ_REQUEST_ECHO : PKS_BASE{
         [Index(0)] public virtual bool IsSuccess { get; set; }
         [Index(1)] public virtual string Command { get; set; }
     }
@@ -31,19 +26,19 @@ namespace Proj {
     }
 
 
-
+    ////////////////////////////////
 
     [ZeroFormattable]
     [Serializable]
-    public class TestPacket {
-        [Index(0)] 
-        public virtual bool IsSuccess { get; set; }
-
-        [Index(1)] 
-        public virtual int IntValue { get; set; }
-
-
-
+    public class PKS_ZC_RESPONSE_ECHO: PKS_BASE {
+        [Index(0)] public virtual bool IsSuccess { get; set; }
+        [Index(1)] public virtual string Command { get; set; }
     }
 
+    [ZeroFormattable]
+    [Serializable]
+    public class PKS_ZC_TEST : PKS_BASE {
+        [Index(0)] public virtual bool IsSuccess { get; set; }
+        [Index(1)] public virtual string Command { get; set; }
+    }
 }
