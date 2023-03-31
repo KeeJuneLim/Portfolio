@@ -1,4 +1,3 @@
-<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by IMC (IMCGames Co., Ltd) -->
 <idspace id="PC">
 	<category type="Melee">
 		<class ClassId="1001" ClassName="Paladin" Script="CommonPCScript" Faction="Player" SkillList="{PlayerNormalAttack,PaladinActiveSkill}" Radius="1"/>
