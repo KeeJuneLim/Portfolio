@@ -3,6 +3,10 @@ using Packet;
 
 namespace Server {
     class ClientReceive {
+        public static void OnReceiveClientMessage(Client client, PKS_CZ_BROADCAST_ENTERED_MAP pks) {
+            ClientResponse.OnResponseClientMessage(client, pks);
+        }
+
         public static void OnReceiveClientMessage(Client client, PKS_CZ_REQUEST_ECHO pks) {
             if (pks.IsSuccess) {
                 var message = pks.Command;

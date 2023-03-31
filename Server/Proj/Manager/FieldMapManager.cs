@@ -37,5 +37,17 @@ namespace Server.Manager {
                 fieldMap.OnUpdate(dt);
             });
         }
+
+        public void RegisterPlayer(Client client, DBPlayerInfo playerInfo) {
+            var fieldMapId = playerInfo.LocatedFieldMapClassId;
+
+            foreach (var fieldMap in FieldMaps) {
+                if (fieldMap.ClassId != fieldMapId) {
+                    continue;
+                }
+
+                fieldMap.AddPlayerCharacter(client, playerInfo);
+            }
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace Server.Manager {
             return skillObject;
         }
 
-        public FieldObject CreateFieldChar(string idspace, FieldMap currentMap, string className, int level, Vector2 position) {
+        public FieldChar CreateFieldChar(string idspace, FieldMap currentMap, Client client, string className, int level, Vector2 position) {
             
             if (idspace != Idspace.PC && idspace != Idspace.NPC) {
                 Console.WriteLine("Wrong Data - Object which Creating is not FieldChar");
@@ -71,6 +71,10 @@ namespace Server.Manager {
 
             fieldChar.OnInitialize();
             fieldChar.CurrentMap = currentMap;
+            fieldChar.Client = client;
+            if (client != null) {
+                client.Owner = fieldChar;
+            }
 
             return fieldChar;
         }

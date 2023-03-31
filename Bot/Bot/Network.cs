@@ -13,7 +13,7 @@ namespace Bot {
         private Client client;
 
 
-        public void Connect() {
+        public void ConnectAndRunScenarioTest() {
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             client = new Client(new IPEndPoint(IPAddress.Parse(IpAddress_LocalHost), Port));
 
@@ -25,7 +25,37 @@ namespace Bot {
                 client.OnClientConnected(null, client);
             }
 
-            RequestEchoWithRandomNumber();
+            var senarioName = ScenarioName.BroadcastWhenConnected;
+
+            BroadcastWhenEnteredMap();
+            
+            //RequestEchoWithRandomNumber();
+        }
+
+        public void BroadcastWhenEnteredMap() {
+
+            Request.BroadcastEnteredMap(client);
+
+            double requestInterval = 0.5;
+            while (true) {
+                //var curUpdateTime = DateTime.Now.Ticks;
+                //var dt = (curUpdateTime - lastRequestedTime) / 10000000;
+                //if (dt <= requestInterval) {
+                //    continue;
+                //}
+
+                //var localAddress = (IPEndPoint)socket.LocalEndPoint;
+
+                //Request.BroadcastEnteredMap(client);
+
+                //Request.RequestEcho(client, number.ToString());
+                //lastRequestedTime = DateTime.Now.Ticks;
+            }
+
+
+
+           // Request.BroadcastEnteredMap(client);
+           
         }
 
         private double requestInterval = 0.5;

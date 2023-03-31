@@ -14,12 +14,12 @@ namespace Bot {
 
         private static List<Thread> threads = new();
 
-        private const int BotCount = 10;
+        private const int BotCount = 1;
         static void Main(string[] args) {
 
             for (int i = 0; i < BotCount; ++i) {
                 var network = new Network();
-                threads.Add(new Thread(network.Connect));
+                threads.Add(new Thread(network.ConnectAndRunScenarioTest));
             }
 
             foreach (var thread in threads) {

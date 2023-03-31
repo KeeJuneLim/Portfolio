@@ -17,6 +17,7 @@ namespace Server {
         public NPCGenerator NpcGenerator = new();
 
         public List<FieldObject> FieldObjects = new();
+        public List<Client> Clients = new();
 
         public List<int> RemoveRequestedFieldObjectHandle = new();
 
@@ -56,6 +57,17 @@ namespace Server {
             }
         }
 
+        public void AddPlayerCharacter(Client client, DBPlayerInfo info) {
+            var jobName = info.JobName;
+            var level = info.Level;
+            var position = info.Position;
+
+            var player = FieldObjectFactory.Inst.CreateFieldChar(Idspace.PC, this, client, jobName, level, position);
+            FieldObjects.Add(player);
+            Clients.Add(client);
+        }
+
+
         public FieldObject GetFieldObject(int handle) {
             foreach (var fieldObject in FieldObjects) {
                 if (fieldObject.Handle == handle) {
@@ -76,6 +88,19 @@ namespace Server {
             }
 
             return null;
+        }
+
+        public List<FieldChar> GetPlayerList() {
+            var playerList = new List<FieldChar>();
+            foreach (var fieldObject in FieldObjects) {
+                if (fieldObject.Idspace != Idspace.PC) {
+                    continue;
+                }
+
+                playerList.Add((FieldChar)fieldObject);
+            }
+
+            return playerList;
         }
 
         // TODO: 1.need to improve performance / 2.find listed fo by handle

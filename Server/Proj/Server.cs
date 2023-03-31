@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Server.Manager;
@@ -33,9 +35,39 @@ namespace Server {
         // invoke when client connects
         private void OnClientConnected(object sender, SocketAsyncEventArgs e) {
             var client = new Client(e.AcceptSocket);
-            ClientManager.Inst.AddClient(client);
+
+            //should request db to get player's info, then register in fieldmap
+            // TODO: DBConnections
+            var playerInfo = new DBPlayerInfo {
+                Level = 1,
+                MaxHP = 100,
+                HP = 90,
+                AttackPower = 10,
+                Defense = 5,
+                CharacterName = "HelloWorld",
+                JobName = "Paladin",
+                LocatedFieldMapClassId = 3001,
+                Position = new Vector2(5, 5)
+            };
+
+            FieldMapManager.Inst.RegisterPlayer(client, playerInfo);
+
             e.AcceptSocket = null;
             Socket.AcceptAsync(e);
         }
+    }
+
+    //TODO: when db process is done, this should be move to correct directory
+    public class DBPlayerInfo {
+        public int Level;
+        public int MaxHP;
+        public int HP;
+        public int AttackPower;
+        public int Defense;
+        public string CharacterName;
+        public string JobName;
+        public int LocatedFieldMapClassId;
+        public Vector2 Position;
+
     }
 }

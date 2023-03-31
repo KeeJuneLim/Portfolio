@@ -12,6 +12,12 @@ namespace Packet {
 
     [ZeroFormattable]
     [Serializable]
+    public class PKS_CZ_BROADCAST_ENTERED_MAP : PKS_BASE {
+        [Index(0)] public virtual bool IsSuccess { get; set; }
+    }
+
+    [ZeroFormattable]
+    [Serializable]
     public class PKS_CZ_REQUEST_ECHO : PKS_BASE {
         [Index(0)] public virtual bool IsSuccess { get; set; }
         [Index(1)] public virtual string Command { get; set; }
@@ -27,6 +33,14 @@ namespace Packet {
 
 
     ////////////////////////////////
+
+
+    [ZeroFormattable]
+    [Serializable]
+    public class PKS_ZC_NOTIFY_CLIENT_ENTERED_MAP : PKS_BASE {
+        [Index(0)] public virtual bool IsSuccess { get; set; }
+        [Index(1)] public virtual int Port { get; set; }
+    }
 
     [ZeroFormattable]
     [Serializable]

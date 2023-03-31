@@ -53,6 +53,11 @@ namespace Bot {
                         Response.OnReceiveClientMessage(this, pks_zc_response_echo);
                         break;
 
+                    case "Packet.PKS_ZC_NOTIFY_CLIENT_ENTERED_MAP":
+                        var notify_enter = ZeroFormatterSerializer.Deserialize<PKS_ZC_NOTIFY_CLIENT_ENTERED_MAP>(data, headerLength + 1);
+                        Response.OnReceiveClientMessage(this, notify_enter);
+                        break;
+
                     case "Packet.PKS_ZC_TEST":
                         var pks_zc_test = ZeroFormatterSerializer.Deserialize<PKS_ZC_TEST>(data, headerLength + 1);
                         Response.OnReceiveClientMessage(this, pks_zc_test);
@@ -78,6 +83,9 @@ namespace Bot {
             switch (typeName) {
                 case "Packet.PKS_CZ_REQUEST_ECHO":
                     data = ZeroFormatterSerializer.Serialize(pks as PKS_CZ_REQUEST_ECHO);
+                    break;
+                case "Packet.PKS_CZ_BROADCAST_ENTERED_MAP":
+                    data = ZeroFormatterSerializer.Serialize(pks as PKS_CZ_BROADCAST_ENTERED_MAP);
                     break;
                 case "Packet.PKS_CZ_TEST2":
                     data = ZeroFormatterSerializer.Serialize(pks as PKS_CZ_TEST2);

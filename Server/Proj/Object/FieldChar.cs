@@ -5,6 +5,7 @@ using Server.Enum;
 
 namespace Server {
     class FieldChar : FieldObject {
+        public Client Client;
         public int MaxHP;
         public int HP;
         public int AttackPower;

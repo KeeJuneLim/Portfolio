@@ -8,8 +8,8 @@ using ZeroFormatter;
 namespace Server {
     class Client : SocketAsyncEventArgs {
         private Socket socket;
-
         internal IPEndPoint remoteAddress;
+        public FieldChar Owner;
 
         public Client(Socket s) {
             socket = s;
@@ -46,6 +46,10 @@ namespace Server {
                         var pks_cz_test = ZeroFormatterSerializer.Deserialize<PKS_CZ_REQUEST_ECHO>(data, headerLength + 1);
                         ClientReceive.OnReceiveClientMessage(this, pks_cz_test);
                         break;
+                    case "Packet.PKS_CZ_BROADCAST_ENTERED_MAP":
+                        var pks_cz_broadcast_entered_map = ZeroFormatterSerializer.Deserialize<PKS_CZ_BROADCAST_ENTERED_MAP>(data, headerLength + 1);
+                        ClientReceive.OnReceiveClientMessage(this, pks_cz_broadcast_entered_map);
+                        break;
 
                     case "Packet.PKS_CZ_TEST2":
                         var pks_cz_test2 = ZeroFormatterSerializer.Deserialize<PKS_CZ_TEST2>(data, headerLength + 1);
@@ -62,7 +66,7 @@ namespace Server {
 
 
         // could be made as async, but not necessarily
-        //private SocketAsyncEventArgs sendArgs = new();
+        private SocketAsyncEventArgs sendArgs = new();
         internal void Send(PKS_BASE pks) {
             var typeName = pks.GetType().FullName;
             var typeArr = ZeroFormatterSerializer.Serialize(typeName);
@@ -71,8 +75,11 @@ namespace Server {
             switch (typeName) {
                 case "Packet.PKS_ZC_RESPONSE_ECHO":
                     data = ZeroFormatterSerializer.Serialize(pks as PKS_ZC_RESPONSE_ECHO);
-
                     break;
+                case "Packet.PKS_ZC_NOTIFY_CLIENT_ENTERED_MAP":
+                    data = ZeroFormatterSerializer.Serialize(pks as PKS_ZC_NOTIFY_CLIENT_ENTERED_MAP);
+                    break;
+
                 case "Packet.PKS_ZC_TEST":
                     data = ZeroFormatterSerializer.Serialize(pks as PKS_ZC_TEST);
                     break;
@@ -84,16 +91,14 @@ namespace Server {
             typeArr.CopyTo(sendData, 1);
             data.CopyTo(sendData, typeArr.Length + 1);
 
-            socket.Send(sendData);
-            //if (pks is PKS_CZ_REQUEST_ECHO packet) {
-            //    var sendData = ZeroFormatter.ZeroFormatterSerializer.Serialize<PKS_CZ_REQUEST_ECHO>(packet);
-            //    sendArgs.SetBuffer(sendData, 0, sendData.Length);
-            //    socket.SendAsync(sendArgs);
-            //}
+
+            sendArgs.SetBuffer(sendData, 0, sendData.Length);
+            socket.SendAsync(sendArgs);
         }
 
         internal void Disconnect() {
-            ClientManager.Inst.RemoveClient(this);
+            // TODO: remove client from fieldmap
+            //ClientManager.Inst.RemoveClient(this);
             SetBuffer(null, 0, 0);
             Completed -= OnReceiveClientMessage;
             socket.DisconnectAsync(this);
@@ -102,9 +107,4 @@ namespace Server {
             Console.WriteLine($"Disconnected :  (From: {remoteAddress.Address}:{remoteAddress.Port}, Connection time: {DateTime.Now})");
         }
     }
-
-
-
-
-
 }
