@@ -9,4 +9,8 @@
     <PackageReference Include="Alexinea.ZeroFormatter" Version="1.6.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entity\" />
+  </ItemGroup>
+
 </Project>

@@ -25,40 +25,40 @@ namespace Server.Object {
             LifeTime = DataProvider.Data.GetDouble(PropName.LifeTime);
         }
 
-        public override void OnUpdate(double dt) {
-            base.OnUpdate(dt);
+        //public override void OnUpdate(double dt) {
+        //    base.OnUpdate(dt);
             
-            TimeSinceCreated += dt;
-            TimeSinceLastUpdated += dt;
+        //    TimeSinceCreated += dt;
+        //    TimeSinceLastUpdated += dt;
 
-            if (TimeSinceCreated >= LifeTime) {
-                RemoveSkillObject();
-            }
+        //    if (TimeSinceCreated >= LifeTime) {
+        //        RemoveSkillObject();
+        //    }
 
-            if (TimeSinceLastUpdated >= UpdateInterval) {
-                Hit();
-                TimeSinceLastUpdated = 0;
-            }
-        }
+        //    if (TimeSinceLastUpdated >= UpdateInterval) {
+        //        Hit();
+        //        TimeSinceLastUpdated = 0;
+        //    }
+        //}
 
-        private void RemoveSkillObject() {
-            User.CurrentMap.RemoveFieldObject(Handle);
-        }
+        //private void RemoveSkillObject() {
+        //    User.CurrentMap.RemoveFieldObject(Handle);
+        //}
 
-        private void Hit() {
-            // User가 FieldChar가 아니라면 잘못된 값이 들어온 것이므로 처리하지 않는다
-            if (User is FieldChar user) {
-                var collidedFieldChar = user.CurrentMap.GetCollidedFieldChars(user);
+        //private void Hit() {
+        //    // User가 FieldChar가 아니라면 잘못된 값이 들어온 것이므로 처리하지 않는다
+        //    if (User is FieldChar user) {
+        //        var collidedFieldChar = user.CurrentMap.GetCollidedFieldChars(user);
 
-                foreach (var fieldChar in collidedFieldChar) {
-                    user.SendMessage(fieldChar, MessageType.Attack, new AttackMessage {
-                        AttackerHandle = user.Handle,
-                        AttackerAttackPower = user.AttackPower,
-                        // 앞으로 연산식에 필요한 정보를 이곳에 추가
-                    });
-                }
+        //        foreach (var fieldChar in collidedFieldChar) {
+        //            user.SendMessage(fieldChar, MessageType.Attack, new AttackMessage {
+        //                AttackerHandle = user.Handle,
+        //                AttackerAttackPower = user.AttackPower,
+        //                // 앞으로 연산식에 필요한 정보를 이곳에 추가
+        //            });
+        //        }
 
-            }
-        }
+        //    }
+        //}
     }
 }

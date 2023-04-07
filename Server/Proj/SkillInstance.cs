@@ -6,11 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Server.Enum;
 using Server.Manager;
+using Server.ObjectEntity;
 using Server.Provider;
 
 namespace Server {
     class SkillInstance {
-        public FieldObject User;
+        public Entity User;
         public const string Idspace = Enum.Idspace.Skill;
         public string ClassName;
 
@@ -42,7 +43,7 @@ namespace Server {
         public void CreateSkillObject(Vector2 position) {
             RemainCooldown = Cooldown;
 
-            FieldObjectFactory.Inst.CreateSkillObject(User, User.CurrentMap, ClassName, position);
+            //FieldObjectFactory.Inst.CreateSkillObject(User, User.CurrentMap, ClassName, position);
         }
 
         private void CalculateCooldown(double dt) {

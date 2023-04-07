@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Server.Enum;
 using Server.Message;
 using Server.Manager;
+using Server.ObjectEntity;
 
 namespace Server {
     class FieldMap {
@@ -16,45 +17,32 @@ namespace Server {
 
         public NPCGenerator NpcGenerator = new();
 
-        public List<FieldObject> FieldObjects = new();
-        public List<Client> Clients = new();
+        public EntityManager EntityManager = new();
+        public SystemManager SystemManager = new();
+        public ClientManager ClientManager = new();
+        public BufferedSynchronization BufferedSync = new();
 
-        public List<int> RemoveRequestedFieldObjectHandle = new();
+
+        public List<int> RemoveRequestedEntityHandle = new();
 
         public void OnInitialize() {
             // 초기 NPC 생성 (풀젠)
-            NpcGenerator.InitGenerator(this);
+            EntityManager.InitEntities(this);
+            SystemManager.InitSystems(this);
+            ClientManager.InitClientManager(this);
+            BufferedSync.InitBufferedSync(this);
 
+            NpcGenerator.InitGenerator(this);
         }
 
         public void OnUpdate(double dt) {
-            UpdateFieldObjects(dt);
-            ExecuteRemoval();
+            SystemManager.UpdateSystems(dt);
+            BufferedSync.SendSyncData();
+            BufferedSync.BroadcastSyncData();
         }
 
-        public void UpdateFieldObjects(double dt) {
-            foreach (var fieldObject in FieldObjects) {
-                fieldObject.OnUpdate(dt);
-            }
-        }
-
-        public void RemoveFieldObject(int handle) {
-            RemoveRequestedFieldObjectHandle.Add(handle);
-        }
-
-        private void ExecuteRemoval() {
-            if (RemoveRequestedFieldObjectHandle.Count <= 0) {
-                return;
-            }
-            foreach (var handle in RemoveRequestedFieldObjectHandle) {
-                for (int i = 0; i < FieldObjects.Count; ++i) {
-                    if (FieldObjects[i].Handle == handle) {
-                        FieldObjects[i] = null;
-                        FieldObjects.Remove(FieldObjects[i]);
-                        break;
-                    }
-                }
-            }
+        public void RemoveEntity(int handle) {
+            RemoveRequestedEntityHandle.Add(handle);
         }
 
         public void AddPlayerCharacter(Client client, DBPlayerInfo info) {
@@ -62,72 +50,70 @@ namespace Server {
             var level = info.Level;
             var position = info.Position;
 
-            var player = FieldObjectFactory.Inst.CreateFieldChar(Idspace.PC, this, client, jobName, level, position);
-            FieldObjects.Add(player);
-            Clients.Add(client);
+            var entity = EntityManager.CreateEntity(Idspace.PC, this, client, jobName, level, position);
         }
 
 
-        public FieldObject GetFieldObject(int handle) {
-            foreach (var fieldObject in FieldObjects) {
-                if (fieldObject.Handle == handle) {
-                    return fieldObject;
-                }
-            }
+        //public FieldObject GetFieldObject(int handle) {
+        //    foreach (var fieldObject in FieldObjects) {
+        //        if (fieldObject.Handle == handle) {
+        //            return fieldObject;
+        //        }
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
-        public FieldChar GetFieldChar(int handle) {
-            foreach (var fieldObject in FieldObjects) {
-                if (fieldObject is FieldChar fieldChar) {
-                    if (fieldChar.Handle == handle) {
-                        return fieldChar;
-                    }
-                }
-            }
+        //public FieldChar GetFieldChar(int handle) {
+        //    foreach (var fieldObject in FieldObjects) {
+        //        if (fieldObject is FieldChar fieldChar) {
+        //            if (fieldChar.Handle == handle) {
+        //                return fieldChar;
+        //            }
+        //        }
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
-        public List<FieldChar> GetPlayerList() {
-            var playerList = new List<FieldChar>();
-            foreach (var fieldObject in FieldObjects) {
-                if (fieldObject.Idspace != Idspace.PC) {
-                    continue;
-                }
+        //public List<FieldChar> GetPlayerList() {
+        //    var playerList = new List<FieldChar>();
+        //    foreach (var fieldObject in FieldObjects) {
+        //        if (fieldObject.Idspace != Idspace.PC) {
+        //            continue;
+        //        }
 
-                playerList.Add((FieldChar)fieldObject);
-            }
+        //        playerList.Add((FieldChar)fieldObject);
+        //    }
 
-            return playerList;
-        }
+        //    return playerList;
+        //}
 
         // TODO: 1.need to improve performance / 2.find listed fo by handle
-        public List<FieldObject> GetCollidedFieldObjects(FieldObject self) {
-            var collidedFieldObjects = new List<FieldObject>();
+        //public List<FieldObject> GetCollidedFieldObjects(FieldObject self) {
+        //    var collidedFieldObjects = new List<FieldObject>();
 
-            foreach (var fieldObject in FieldObjects) {
-                if (self.IsCollided(fieldObject)) {
-                    collidedFieldObjects.Add(fieldObject);
-                }
-            }
+        //    foreach (var fieldObject in FieldObjects) {
+        //        if (self.IsCollided(fieldObject)) {
+        //            collidedFieldObjects.Add(fieldObject);
+        //        }
+        //    }
 
-            return collidedFieldObjects;
-        }
+        //    return collidedFieldObjects;
+        //}
 
-        public List<FieldChar> GetCollidedFieldChars(FieldObject self) {
-            var collidedFieldChar = new List<FieldChar>();
+        //public List<FieldChar> GetCollidedFieldChars(FieldObject self) {
+        //    var collidedFieldChar = new List<FieldChar>();
 
-            foreach (var fieldObject in FieldObjects) {
-                if (self.IsCollided(fieldObject)) {
-                    if (fieldObject is FieldChar fieldChar) {
-                        collidedFieldChar.Add(fieldChar);
-                    }
-                }
-            }
+        //    foreach (var fieldObject in FieldObjects) {
+        //        if (self.IsCollided(fieldObject)) {
+        //            if (fieldObject is FieldChar fieldChar) {
+        //                collidedFieldChar.Add(fieldChar);
+        //            }
+        //        }
+        //    }
 
-            return collidedFieldChar;
-        }
+        //    return collidedFieldChar;
+        //}
     }
 }

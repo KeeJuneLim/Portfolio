@@ -22,6 +22,14 @@
 
     class PropName {
         // PC/NPC
+        //
+        public const string MaxHP = "MaxHP";
+        public const string HP = "HP";
+        public const string AttackPower = "AttackPower";
+        public const string Defense = "Defense";
+        public const string Exp = "Exp";
+
+
         public const string ClassName = "ClassName";
         public const string ClassId = "ClassId";
         public const string NPCName = "NPCName";

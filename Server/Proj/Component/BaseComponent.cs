@@ -1,8 +1,10 @@
 ﻿using System;
+using Server.ObjectEntity;
 
-namespace Server {
+namespace Server.Component {
     class BaseComponent {
-        public FieldObject Owner;
+        public Entity Owner;
+        public Action<int, string, string> PropertyChanged;
 
         public virtual void Initialize() {
 

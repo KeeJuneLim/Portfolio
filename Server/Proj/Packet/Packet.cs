@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using ZeroFormatter;
 
@@ -48,6 +49,15 @@ namespace Packet {
         [Index(0)] public virtual bool IsSuccess { get; set; }
         [Index(1)] public virtual string Command { get; set; }
     }
+
+    [ZeroFormattable]
+    [Serializable]
+    public class PKS_ZC_SYNC_PROPERTY_LIST : PKS_BASE {
+        [Index(0)] public virtual int Handle { get; set; }
+
+        [Index(1)] public virtual Dictionary<string, string> SyncData { get; set; }
+    }
+
 
     [ZeroFormattable]
     [Serializable]
