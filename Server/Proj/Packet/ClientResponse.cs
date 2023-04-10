@@ -4,18 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Packet;
+using Server.Component;
 
 namespace Server {
     class ClientResponse {
         public static void OnResponseClientMessage(Client client, PKS_CZ_BROADCAST_ENTERED_MAP pks) {
-            var players = client.Owner.CurrentMap.GetPlayerList();
-            foreach (var player in players) {
-                var clientInfo = new PKS_ZC_NOTIFY_CLIENT_ENTERED_MAP {
-                    IsSuccess = true,
-                    Port = client.remoteAddress.Port
-                };
+            var clients = client.Component.CurrentMap.ClientManager.GetClientEntities();
+            var packet = new PKS_ZC_NOTIFY_CLIENT_ENTERED_MAP {
+                IsSuccess = true,
+                Port = client.remoteAddress.Port
+            };
 
-                player.Client.Send(clientInfo);
+            foreach (var clientEntity in clients) {
+                var clientComp = clientEntity.GetComponent<ClientComponent>();
+                clientComp.SendPacket(packet);
             }
         }
 

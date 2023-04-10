@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using Packet;
+using Server.Component;
 using Server.Manager;
 using ZeroFormatter;
 
@@ -9,7 +10,7 @@ namespace Server {
     class Client : SocketAsyncEventArgs {
         private Socket socket;
         internal IPEndPoint remoteAddress;
-        public FieldChar Owner;
+        public ClientComponent Component;
 
         public Client(Socket s) {
             socket = s;
@@ -98,7 +99,9 @@ namespace Server {
 
         internal void Disconnect() {
             // TODO: remove client from fieldmap
-            //ClientManager.Inst.RemoveClient(this);
+            var handle = Component.Owner.Handle;
+            Component.CurrentMap.EntityManager.RemoveEntity(handle);
+
             SetBuffer(null, 0, 0);
             Completed -= OnReceiveClientMessage;
             socket.DisconnectAsync(this);

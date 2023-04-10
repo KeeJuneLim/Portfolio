@@ -1,4 +1,3 @@
-<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by IMC (IMCGames Co., Ltd) -->
 <idspace id="NPC">
 	<category type="Normal">
 		<class ClassId="10001" ClassName="Zombie" Script="CommonNormalNPCScript" Faction="Monster" SkillList="{MonsterNormalAttack,BossActiveSkill}" Radius="1" BaseHP="100" HPPerLevel="15" BaseAttackPower="7" AttackPowerPerLevel="2" BaseDefense="5" DefensePerLevel="2"/>

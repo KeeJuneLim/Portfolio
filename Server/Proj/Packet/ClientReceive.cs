@@ -4,6 +4,7 @@ using Packet;
 namespace Server {
     class ClientReceive {
         public static void OnReceiveClientMessage(Client client, PKS_CZ_BROADCAST_ENTERED_MAP pks) {
+            Console.WriteLine($"[{client.Component.Owner.Handle}] - Requesting to broadcast");
             ClientResponse.OnResponseClientMessage(client, pks);
         }
 

@@ -38,23 +38,23 @@ namespace Server {
             }
         }
 
-        public virtual void SendMessage(FieldObject receiver, string messageType, BaseMessage message) {
-            foreach (var comp in Components) {
-                if (comp is MessageComponent messageComponent) {
-                    messageComponent.SendMessage(receiver, messageType, message);
-                    return;
-                }
-            }
-        }
+        //public virtual void SendMessage(FieldObject receiver, string messageType, BaseMessage message) {
+        //    foreach (var comp in Components) {
+        //        if (comp is MessageComponent messageComponent) {
+        //            messageComponent.SendMessage(receiver, messageType, message);
+        //            return;
+        //        }
+        //    }
+        //}
 
-        public virtual void ReceiveMessage(FieldObject sender, string messageType, BaseMessage message) {
-            foreach (var comp in Components) {
-                if (comp is MessageComponent messageComponent) {
-                    messageComponent.ReceiveMessage(sender, messageType, message);
-                    return;
-                }
-            }
-        }
+        //public virtual void ReceiveMessage(FieldObject sender, string messageType, BaseMessage message) {
+        //    foreach (var comp in Components) {
+        //        if (comp is MessageComponent messageComponent) {
+        //            messageComponent.ReceiveMessage(sender, messageType, message);
+        //            return;
+        //        }
+        //    }
+        //}
 
         public bool IsInRange(Vector2 targetPosition, double range) {
             var distance = (Position - targetPosition).Length();

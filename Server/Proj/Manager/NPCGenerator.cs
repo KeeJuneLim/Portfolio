@@ -27,8 +27,9 @@ namespace Server.Manager {
                     var randY = (RandomGenerator.NextDouble() - 0.5) * positionOffset;
                     var newPosition = position + new Vector2((float)randX, (float)randY);
 
-                    var fieldObject = FieldObjectFactory.Inst.CreateFieldChar(Idspace.NPC, owner, null, npcName, level, newPosition);
-                    Owner.FieldObjects.Add(fieldObject);
+                    var entity = Owner.EntityManager.CreateEntity(Idspace.NPC, owner, null, npcName, level, newPosition);
+                    //var fieldObject = FieldObjectFactory.Inst.CreateFieldChar(Idspace.NPC, owner, null, npcName, level, newPosition);
+                    //Owner.FieldObjects.Add(fieldObject);
                 }
             }
         }

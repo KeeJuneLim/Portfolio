@@ -37,6 +37,7 @@ namespace Bot {
             Request.BroadcastEnteredMap(client);
 
             double requestInterval = 0.5;
+
             while (true) {
                 //var curUpdateTime = DateTime.Now.Ticks;
                 //var dt = (curUpdateTime - lastRequestedTime) / 10000000;
@@ -54,7 +55,6 @@ namespace Bot {
 
 
 
-           // Request.BroadcastEnteredMap(client);
            
         }
 
